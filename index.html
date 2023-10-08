@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&family=Montserrat&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO LIST</title>
+    <style>
+        /* 
+        Font:
+            font-family: 'Gabarito', cursive;
+            font-family: 'Montserrat', sans-serif;
+        */
+
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #F8F6F4;
+        }
+
+        .inner-container {
+            background-color: #C4DFDF;
+            padding: 5% 0 5% 2%;
+        }
+
+        h1 {
+            font-family: 'Gabarito', cursive;
+            margin-bottom: 0;
+        }
+
+        p {
+            margin-top: 0;
+        }
+
+        span {
+            font-family: 'Montserrat', sans-serif;
+            font-size: xx-large;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            font-size: large;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="outer-container">
+        <form action="#">
+            <div class="inner-container">
+                <h1>TO DO LIST</h1>
+                <p>Click 2 kali untuk remove, centang checkbox untuk mencoret</p>
+            </div>
+
+            <div class="insert-container">
+                <input type="text" name="" id="text">
+                <button type="button" onclick="fungsiAdd()" id="add">Add</button>
+            </div>
+
+            <ul id="list">
+            </ul>
+        </form>
+    </div>
+
+    <script>
+        // Menginisialisasikan ID kedalam sebuah variabel
+        const list = document.getElementById("list");
+        const add = document.getElementById("add");
+        const text = document.getElementById("text");
+
+        // Menambahkan list to do dari text.value setelah tombol "Add" ditekan
+        function fungsiAdd() {
+            // Inisialisasikan variabel dan membuat element baru
+            const node = document.createElement("li");
+            const span = document.createElement("span");
+            const checkbox = document.createElement("input");
+
+            // Menambahkan type=checkbox pada variable checkbox
+            checkbox.setAttribute("type", "checkbox");
+
+            // Memasukan text.value yang diinput user kedalam variabel
+            const txt = document.createTextNode(text.value);
+
+            // Memasukkan text.value ke dalam elemen span
+            span.appendChild(txt);
+
+            // Menggunakan event listener
+            checkbox.addEventListener("change", coret);
+
+            // Memnambahkan child text.value yang ada di dalam span ke dalam elemen node/list
+            node.appendChild(span);
+
+            // Memnambahkan child checkbox yang ada di dalam span ke dalam elemen node/list
+            node.appendChild(checkbox);
+
+            // Menambahkan list yang baru di atas list sebelumnya
+            list.insertBefore(node, list.firstChild);
+
+            // Menambahkan event listener untuk menghapus elemen <li> saat double-click
+            node.addEventListener("dblclick", function () {
+                list.removeChild(this); // Menghapus elemen <li> yang ditekan dua kali
+            });
+
+        }
+
+        // Fungsi untuk menandai teks sebagai tercoret atau tidak tercoret
+        function coret() {
+            const checkbox = this; // Checkbox yang memicu perubahan
+            const span = checkbox.previousSibling; // Element <span> sebelum checkbox
+
+            if (checkbox.checked) {
+                span.style.textDecoration = "line-through";
+            } else {
+                span.style.textDecoration = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>
